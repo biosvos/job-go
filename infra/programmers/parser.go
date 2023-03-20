@@ -92,6 +92,14 @@ func (l *listJobsContent) extractJobs() ([]*recruiter.Job, error) {
 	return ret, nil
 }
 
+func (l *listJobsContent) getJobIds() []int {
+	var ret []int
+	for _, position := range l.JobPositions {
+		ret = append(ret, position.Id)
+	}
+	return ret
+}
+
 func (l *listJobsContent) getTotalPage() int {
 	return l.TotalPages
 }
