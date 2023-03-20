@@ -29,3 +29,11 @@ func (r *MemoryRepository) Load(path string) ([]byte, error) {
 	}
 	return bytes, nil
 }
+
+func (r *MemoryRepository) List() ([]string, error) {
+	var ret []string
+	for key := range r.files {
+		ret = append(ret, key)
+	}
+	return ret, nil
+}

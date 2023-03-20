@@ -55,3 +55,14 @@ func TestMemoryRepository_Load_(t *testing.T) {
 	require.Error(t, err)
 	require.Nil(t, bytes)
 }
+
+func TestMemoryRepository_List(t *testing.T) {
+	repo := NewMemoryRepository()
+	_ = repo.Save("abc", []byte("abc"))
+
+	files, err := repo.List()
+
+	require.NoError(t, err)
+	require.Equal(t, 1, len(files))
+	require.Equal(t, "abc", files[0])
+}
