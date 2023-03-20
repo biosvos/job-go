@@ -1,7 +1,6 @@
 package programmers
 
 import (
-	"encoding/json"
 	"github.com/pkg/errors"
 	"job-go/flow/recruiter"
 )
@@ -21,17 +20,17 @@ func (p *Programmers) ListJobs(opts ...recruiter.ListJobOption) ([]*recruiter.Jo
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}
-	ret, err := extractJobs(content)
+	ret, err := content.extractJobs()
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}
-
-	for i := 2; i <= content.TotalPages; i++ {
+	totalPage := content.getTotalPage()
+	for i := 2; i <= totalPage; i++ {
 		content, err := getPageListJobContent(1, options)
 		if err != nil {
 			return nil, errors.WithStack(err)
 		}
-		jobs, err := extractJobs(content)
+		jobs, err := content.extractJobs()
 		if err != nil {
 			return nil, errors.WithStack(err)
 		}
@@ -46,10 +45,6 @@ func getPageListJobContent(page uint64, options *recruiter.ListJobOptions) (*lis
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}
-	var content listJobsContent
-	err = json.Unmarshal(body, &content)
-	if err != nil {
-		return nil, errors.WithStack(err)
-	}
-	return &content, nil
+	ret, err := newListJobsContent(body)
+	return ret, errors.WithStack(err)
 }

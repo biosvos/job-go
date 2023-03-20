@@ -1,6 +1,8 @@
 package programmers
 
 import (
+	"encoding/json"
+	"github.com/pkg/errors"
 	"job-go/flow/recruiter"
 	"time"
 )
@@ -69,9 +71,15 @@ type listJobsContent struct {
 	TotalEntries int    `json:"totalEntries"`
 }
 
-func extractJobs(content *listJobsContent) ([]*recruiter.Job, error) {
+func newListJobsContent(body []byte) (*listJobsContent, error) {
+	var ret listJobsContent
+	err := json.Unmarshal(body, &ret)
+	return &ret, errors.WithStack(err)
+}
+
+func (l *listJobsContent) extractJobs() ([]*recruiter.Job, error) {
 	var ret []*recruiter.Job
-	for _, position := range content.JobPositions {
+	for _, position := range l.JobPositions {
 		ret = append(ret, &recruiter.Job{
 			Title:        position.Title,
 			Requirements: nil,
@@ -83,4 +91,8 @@ func extractJobs(content *listJobsContent) ([]*recruiter.Job, error) {
 		})
 	}
 	return ret, nil
+}
+
+func (l *listJobsContent) getTotalPage() int {
+	return l.TotalPages
 }
