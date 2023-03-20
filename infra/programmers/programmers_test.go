@@ -6,11 +6,14 @@ import (
 	"github.com/stretchr/testify/require"
 	"job-go/flow/recruiter"
 	"log"
+	"os"
 	"testing"
 )
 
 func TestName(t *testing.T) {
-	jobs, err := NewProgrammers().ListJobs(recruiter.WithMinAnnualIncome(7000))
+	_ = os.Mkdir("pro", 0700)
+	repository := NewFileRepository("pro")
+	jobs, err := NewProgrammers(repository).ListJobs(recruiter.WithMinAnnualIncome(7000))
 	require.NoError(t, err)
 	log.Println(jobs)
 }
