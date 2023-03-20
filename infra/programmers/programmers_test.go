@@ -1,11 +1,10 @@
-//go:build ignore
+//go:build programmers
 
 package programmers
 
 import (
 	"github.com/stretchr/testify/require"
 	"job-go/flow/recruiter"
-	"log"
 	"os"
 	"testing"
 )
@@ -15,7 +14,9 @@ func TestName(t *testing.T) {
 	repository := NewFileRepository("pro")
 	jobs, err := NewProgrammers(repository).ListJobs(recruiter.WithMinAnnualIncome(7000))
 	require.NoError(t, err)
-	log.Println(jobs)
+	for _, job := range jobs {
+		t.Logf("%+v", job)
+	}
 }
 
 func TestGetJob(t *testing.T) {
