@@ -8,10 +8,11 @@ import (
 var _ recruiter.Recruiter = &Programmers{}
 
 type Programmers struct {
+	repo Repository
 }
 
-func NewProgrammers() *Programmers {
-	return &Programmers{}
+func NewProgrammers(repository Repository) *Programmers {
+	return &Programmers{repo: repository}
 }
 
 func (p *Programmers) ListJobs(opts ...recruiter.ListJobOption) ([]*recruiter.Job, error) {
