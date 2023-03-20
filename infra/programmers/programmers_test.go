@@ -12,3 +12,11 @@ func TestName(t *testing.T) {
 	require.NoError(t, err)
 	log.Println(jobs)
 }
+
+func TestGetJob(t *testing.T) {
+	job, err := requestJob(17452)
+	require.NoError(t, err)
+	content, err := newJobContent(job)
+	require.NoError(t, err)
+	t.Log(content.JobPosition.Requirement)
+}
