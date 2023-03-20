@@ -73,3 +73,15 @@ func TestFileRepository_Load_(t *testing.T) {
 	require.Error(t, err)
 	require.Nil(t, bytes)
 }
+
+func TestFileRepository_List(t *testing.T) {
+	repo, closer := createFileRepository(t)
+	defer closer()
+	_ = repo.Save("abc", []byte("abc"))
+
+	files, err := repo.List()
+
+	require.NoError(t, err)
+	require.Equal(t, 1, len(files))
+	require.Equal(t, "abc", files[0])
+}

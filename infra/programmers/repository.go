@@ -4,4 +4,5 @@ type Repository interface {
 	IsExists(path string) bool
 	Save(path string, bytes []byte) error
 	Load(path string) ([]byte, error)
+	List() ([]string, error)
 }

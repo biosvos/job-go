@@ -11,6 +11,18 @@ type FileRepository struct {
 	prefix string
 }
 
+func (f *FileRepository) List() ([]string, error) {
+	dir, err := os.ReadDir(f.prefix)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+	var ret []string
+	for _, entry := range dir {
+		ret = append(ret, entry.Name())
+	}
+	return ret, nil
+}
+
 func NewFileRepository(prefix string) *FileRepository {
 	return &FileRepository{
 		prefix: prefix,
