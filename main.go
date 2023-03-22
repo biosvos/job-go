@@ -2,9 +2,9 @@ package main
 
 import (
 	"job-go/flow/flower"
+	"job-go/infra/gui"
 	"job-go/infra/pipe"
 	"job-go/infra/programmers"
-	"log"
 	"os"
 )
 
@@ -18,11 +18,6 @@ func main() {
 	}
 
 	flow := flower.NewFlow(recruiter, tagger)
-	jobs, err := flow.ListJobs()
-	if err != nil {
-		panic(err)
-	}
-	for _, job := range jobs {
-		log.Printf("%+v", job)
-	}
+	app := gui.NewGui(flow)
+	app.Run()
 }
