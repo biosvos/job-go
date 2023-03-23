@@ -20,6 +20,7 @@ Web
 		HTML5
 	TypeScript|Typescript
 	NestJS
+	React
 Technical Skill
 	Cache
 Network
@@ -50,3 +51,5 @@ Cloud Platform
 자동화
 	CI
 	CD
+OpenGL
+모바일
