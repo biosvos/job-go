@@ -4,6 +4,7 @@ import (
 	"github.com/pkg/errors"
 	"job-go/flow/recruiter"
 	"job-go/flow/tagger"
+	"job-go/lib"
 )
 
 var _ Flower = &Flow{}
@@ -25,14 +26,18 @@ func (f *Flow) ListJobs() ([]*Job, error) {
 
 	var ret []*Job
 	for _, job := range jobs {
+		set := lib.NewSet[string]()
 		tags := f.tagger.Tagging(job.Title)
 		tags = append(tags, f.tagger.Tagging(job.Requirement)...)
+		for _, tag := range tags {
+			set.Add(tag)
+		}
 
 		ret = append(ret, &Job{
 			Title:       job.Title,
 			Requirement: job.Requirement,
 			Url:         job.Url,
-			Tags:        tags,
+			Tags:        set.Slice(),
 		})
 	}
 	return ret, nil
