@@ -5,6 +5,7 @@ go 1.20
 require (
 	fyne.io/fyne/v2 v2.3.2
 	github.com/biosvos/rest v0.1.1
+	github.com/dstotijn/go-notion v0.11.0
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.8.2
 )

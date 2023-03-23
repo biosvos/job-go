@@ -6,6 +6,7 @@ import (
 	"job-go/infra/gui"
 	"job-go/infra/pipe"
 	"job-go/infra/programmers"
+	"job-go/infra/publish"
 	"os"
 )
 
@@ -20,10 +21,14 @@ func main() {
 	flow := flower.NewFlow(recruiter, tagger)
 
 	runtime := os.Getenv("RUNTIME")
-	if runtime == "fyne" {
+	switch runtime {
+	case "fyne":
 		app := gui.NewGui(flow)
 		app.Run()
-	} else {
+	case "notion":
+		notion := publish.NewNotion(flow)
+		notion.Run()
+	default:
 		app := cli.NewCli(flow)
 		app.Run()
 	}
