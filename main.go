@@ -2,6 +2,7 @@ package main
 
 import (
 	"job-go/flow/flower"
+	"job-go/infra/cli"
 	"job-go/infra/gui"
 	"job-go/infra/pipe"
 	"job-go/infra/programmers"
@@ -16,8 +17,14 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-
 	flow := flower.NewFlow(recruiter, tagger)
-	app := gui.NewGui(flow)
-	app.Run()
+
+	runtime := os.Getenv("RUNTIME")
+	if runtime == "fyne" {
+		app := gui.NewGui(flow)
+		app.Run()
+	} else {
+		app := cli.NewCli(flow)
+		app.Run()
+	}
 }
