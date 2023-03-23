@@ -4,7 +4,9 @@ import (
 	"context"
 	"github.com/dstotijn/go-notion"
 	"job-go/flow/flower"
+	"log"
 	"os"
+	"time"
 )
 
 type Notion struct {
@@ -31,51 +33,38 @@ func (n *Notion) Run() {
 				Name: tag,
 			})
 		}
-		if len(tags) > 0 {
-			_, err := client.CreatePage(context.Background(), notion.CreatePageParams{
-				ParentType: notion.ParentTypeDatabase,
-				ParentID:   notionDatabaseId,
-				DatabasePageProperties: &notion.DatabasePageProperties{
-					"제목": {
-						Title: []notion.RichText{
-							{
-								Text: &notion.Text{Content: job.Title},
-							},
-						},
-					},
-					"태그": {
-						MultiSelect: tags,
-					},
-					"URL": {
-						URL: &job.Url,
+		properties := notion.DatabasePageProperties{
+			"제목": {
+				Title: []notion.RichText{
+					{
+						Text: &notion.Text{Content: job.Title},
 					},
 				},
-			})
+			},
+			"URL": {
+				URL: &job.Url,
+			},
+		}
 
-			if err != nil {
-				panic(err)
-			}
-		} else {
-			_, err := client.CreatePage(context.Background(), notion.CreatePageParams{
-				ParentType: notion.ParentTypeDatabase,
-				ParentID:   notionDatabaseId,
-				DatabasePageProperties: &notion.DatabasePageProperties{
-					"제목": {
-						Title: []notion.RichText{
-							{
-								Text: &notion.Text{Content: job.Title},
-							},
-						},
-					},
-					"URL": {
-						URL: &job.Url,
-					},
-				},
-			})
-			if err != nil {
-				panic(err)
+		if len(tags) > 0 {
+			properties["태그"] = notion.DatabasePageProperty{
+				MultiSelect: tags,
 			}
 		}
 
+		param := notion.CreatePageParams{
+			ParentType:             notion.ParentTypeDatabase,
+			ParentID:               notionDatabaseId,
+			DatabasePageProperties: &properties,
+		}
+
+		for retry := 0; retry < 3; retry++ {
+			_, err := client.CreatePage(context.Background(), param)
+			if err == nil {
+				break
+			}
+			log.Printf("failed to add %v page. retry %v", job.Title, retry+1)
+			time.Sleep(time.Second * 1)
+		}
 	}
 }
