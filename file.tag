@@ -1,5 +1,5 @@
 Programming Language
-	Go|go
+	Go|go|golang
 	C
 	C++
 	C#
@@ -28,7 +28,7 @@ Network
 Architecture
 	MSA|Microservice Architecture
 Database|DB
-	MongoDB
+	MongoDB|mongodb
 Operating system
 	Windows
 	Linux
@@ -53,3 +53,9 @@ Cloud Platform
 	CD
 OpenGL
 모바일
+오케스트레이션 도구
+    Container
+    AWS
+    Kubernetes|kubernetes
+Algorithm
+Google Analytics
