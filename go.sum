@@ -55,6 +55,8 @@ github.com/benoitkugler/textlayout-testdata v0.1.1/go.mod h1:i/qZl09BbUOtd7Bu/W1
 github.com/bgentry/speakeasy v0.1.0/go.mod h1:+zsyZBPWlz7T6j88CTgSN5bM796AkVf0kBD4zp0CCIs=
 github.com/biosvos/rest v0.1.1 h1:4YiuQJepbXP9IGnE1ms9+GgNdPcCJFfywT7O4tPBaDY=
 github.com/biosvos/rest v0.1.1/go.mod h1:cjN2pz9jZTn0P40ft0nMrlVsIlkEu7aWi45fEHzxY2Y=
+github.com/biosvos/strings v0.0.0-20230323065137-fd1a24f07474 h1:9hIxnq90CihOG0/m23Gw76dKDNC+N8MS9FTldQOoVWk=
+github.com/biosvos/strings v0.0.0-20230323065137-fd1a24f07474/go.mod h1:L9ec2CCf5923qNeQiaJC57hsYfBkRzqaWjLw2d4AWbU=
 github.com/bketelsen/crypt v0.0.4/go.mod h1:aI6NrJ0pMGgvZKL1iVgXLnfIFJtfV+bKCoqOes/6LfM=
 github.com/census-instrumentation/opencensus-proto v0.2.1/go.mod h1:f6KPmirojxKA12rnyqOA5BBL4O983OfeGPqjHWSTneU=
 github.com/chzyer/logex v1.1.10/go.mod h1:+Ywpsq7O8HXn0nuIou7OrIPyXbp3wmkHB+jjWRnGsAI=
