@@ -76,7 +76,7 @@ func (n *Notion) Run() {
 				break
 			}
 			log.Printf("%+v", err)
-			log.Printf("failed to add %v page. retry %v", job.Title, retry+1)
+			log.Printf("failed to add %+v page. retry %v", job, retry+1)
 			time.Sleep(time.Second * 1)
 		}
 	}
