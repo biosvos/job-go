@@ -56,6 +56,18 @@ func (n *Notion) Run() {
 			ParentType:             notion.ParentTypeDatabase,
 			ParentID:               notionDatabaseId,
 			DatabasePageProperties: &properties,
+			Children: []notion.Block{
+				notion.Heading1Block{
+					RichText: []notion.RichText{{Text: &notion.Text{Content: "자격 조건"}}},
+				},
+				notion.ParagraphBlock{
+					RichText: []notion.RichText{{Text: &notion.Text{Content: job.QualificationRequirements}}},
+				},
+				notion.Heading1Block{
+					RichText: []notion.RichText{{Text: &notion.Text{Content: "우대 사항"}}},
+				},
+				notion.ParagraphBlock{RichText: []notion.RichText{{Text: &notion.Text{Content: job.PreferredRequirements}}}},
+			},
 		}
 
 		for retry := 0; retry < 3; retry++ {
