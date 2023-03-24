@@ -29,3 +29,7 @@ func (s *Stack[T]) Peek() T {
 	lastIndex := len(s.elements) - 1
 	return s.elements[lastIndex]
 }
+
+func (s *Stack[T]) Size() int {
+	return len(s.elements)
+}

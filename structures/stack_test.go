@@ -71,3 +71,11 @@ func TestStackPeek(t *testing.T) {
 	require.Equal(t, "A", a)
 	require.Equal(t, "A", b)
 }
+
+func TestSize(t *testing.T) {
+	stack := NewStack("A", "B")
+
+	ret := stack.Size()
+
+	require.Equal(t, 2, ret)
+}
