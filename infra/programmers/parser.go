@@ -2,6 +2,7 @@ package programmers
 
 import (
 	"encoding/json"
+	"github.com/biosvos/strings"
 	"github.com/pkg/errors"
 	"job-go/flow/recruiter"
 	"time"
@@ -229,10 +230,18 @@ func newJobContent(body []byte) (*jobContent, error) {
 }
 
 func (j *jobContent) extractJob() *recruiter.Job {
+	requirements, err := strings.Strings(j.JobPosition.Requirement).Replace(`(<.*?>)`, "")
+	if err != nil {
+		panic(err)
+	}
+	preferred, err := strings.Strings(j.JobPosition.PreferredExperience).Replace(`(<.*?>)`, "")
+	if err != nil {
+		panic(err)
+	}
 	return &recruiter.Job{
 		Title:                     j.JobPosition.Title,
-		QualificationRequirements: j.JobPosition.Requirement,
-		PreferredRequirements:     j.JobPosition.PreferredExperience,
+		QualificationRequirements: requirements,
+		PreferredRequirements:     preferred,
 		Url:                       "https://career.programmers.co.kr" + j.JobPosition.Url,
 		Company: recruiter.Company{
 			Name:    j.JobPosition.Company.Name,
