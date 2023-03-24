@@ -2,6 +2,7 @@ package pipe
 
 import (
 	"job-go/flow/tagger"
+	"job-go/structures"
 	"os"
 	"sort"
 	"strings"
@@ -25,25 +26,25 @@ func NewPipeTagger(path string) (*Pipe, error) {
 		return nil, err
 	}
 	graph := NewGraph()
-	var stack []string
-	lines := strings.Split(string(bytes), "\n")
+	stack := structures.NewStack[string]()
+	lines := strings.Split(strings.ReplaceAll(string(bytes), "\r\n", "\n"), "\n")
 	for _, line := range lines {
 		count := strings.Count(line, "\t")
 		line = strings.ReplaceAll(line, "\t", "")
 		words := strings.Split(line, "|")
-		for len(stack) < count {
-			stack = stack[:count]
+		for stack.Size() < count {
+			stack.Pop()
 		}
-		stack = append(stack, words[0])
 		representative := words[0]
 		for _, word := range words {
 			graph.AddVertex(word)
-			if len(stack) > 0 {
-				graph.Link(stack[len(stack)-1], word, childrenAccessor)
-				graph.Link(word, stack[len(stack)-1], parentsAccessor)
+			if !stack.IsEmpty() {
+				graph.Link(stack.Peek(), word, childrenAccessor)
+				graph.Link(word, stack.Peek(), parentsAccessor)
 			}
 			graph.Link(word, representative, representativeAccessor)
 		}
+		stack.Push(representative)
 	}
 
 	return &Pipe{
