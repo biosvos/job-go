@@ -1,10 +1,11 @@
 package recruiter
 
 type Job struct {
-	Title       string
-	Requirement string
-	Url         string
-	Company     Company
+	Title                     string
+	QualificationRequirements string
+	PreferredRequirements     string
+	Url                       string
+	Company                   Company
 }
 
 type Company struct {

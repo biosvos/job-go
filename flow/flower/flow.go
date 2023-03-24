@@ -28,16 +28,18 @@ func (f *Flow) ListJobs() ([]*Job, error) {
 	for _, job := range jobs {
 		set := lib.NewSet[string]()
 		tags := f.tagger.Tagging(job.Title)
-		tags = append(tags, f.tagger.Tagging(job.Requirement)...)
+		tags = append(tags, f.tagger.Tagging(job.QualificationRequirements)...)
+		tags = append(tags, f.tagger.Tagging(job.PreferredRequirements)...)
 		for _, tag := range tags {
 			set.Add(tag)
 		}
 
 		ret = append(ret, &Job{
-			Title:       job.Title,
-			Requirement: job.Requirement,
-			Url:         job.Url,
-			Tags:        set.Slice(),
+			Title:                     job.Title,
+			QualificationRequirements: job.QualificationRequirements,
+			PreferredRequirements:     job.PreferredRequirements,
+			Url:                       job.Url,
+			Tags:                      set.Slice(),
 		})
 	}
 	return ret, nil

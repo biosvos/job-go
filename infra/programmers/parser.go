@@ -230,9 +230,10 @@ func newJobContent(body []byte) (*jobContent, error) {
 
 func (j *jobContent) extractJob() *recruiter.Job {
 	return &recruiter.Job{
-		Title:       j.JobPosition.Title,
-		Requirement: j.JobPosition.Requirement,
-		Url:         "https://career.programmers.co.kr" + j.JobPosition.Url,
+		Title:                     j.JobPosition.Title,
+		QualificationRequirements: j.JobPosition.Requirement,
+		PreferredRequirements:     j.JobPosition.PreferredExperience,
+		Url:                       "https://career.programmers.co.kr" + j.JobPosition.Url,
 		Company: recruiter.Company{
 			Name:    j.JobPosition.Company.Name,
 			Address: j.JobPosition.Company.Address,
